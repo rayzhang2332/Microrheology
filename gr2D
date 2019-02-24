@@ -1,4 +1,7 @@
 function [result,t] = gr2D(data,dataType,dt,rmin,rmax,deltar)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate pair distribution function
+%
 % MODIFICATION HISTORY:
 %     12-10-01   Eric R. Weeks
 % see:  http://www.physics.emory.edu/~weeks/idl/gofr0.html
