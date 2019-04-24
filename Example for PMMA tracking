@@ -43,7 +43,7 @@ checkLH(Ib,cnt,3,0,5000,0.25)
 %%  3. Now, you have finished pre-tracking and you have all the parameters. We can start tracking. 
 %   Mass cut:  R<25 R>55, I<1300  I>8000    e cut: 0.25
 %   lnoise = 1  th= 10 
-poslist=PMMAtrack2('0_3_2d_2__C001T','%03u',2,50,19,10,1,0,45,700,2050,0.3,1,1);
+poslist=PMMAtrack2('0_3_2d_2__C001T','%03u',2,50,19,10,1,0,45,700,2050,0.3,1,11,1,1);
 % Parameter -- 1st: filehead
 %              2nd: digits
 %              3rd: 1st frame
@@ -60,8 +60,9 @@ poslist=PMMAtrack2('0_3_2d_2__C001T','%03u',2,50,19,10,1,0,45,700,2050,0.3,1,1);
 %            If you don't want to see movie, you can stop here
 %             13th: interactive mode, 1 = movie mode
 %                                     0 = disable movie mode
-%             14th: frame interval
-%             15th: pause time, set the FPS as you want. Unit is second
+%             14th: MarkerSize
+%             15th: frame interval
+%             16th: pause time, set the FPS as you want. Unit is second
 %                   This is optional parameter, default is 0.2s. 
 % check for pixel bias
 hist(mod(poslist(:,1),1),20);
