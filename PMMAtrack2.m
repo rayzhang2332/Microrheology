@@ -1,4 +1,4 @@
-function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,sigma,threshold,lnoise,radiuscutL,radiuscutH,IcutL,IcutH,ecut,interactive,moviedt)
+function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,threshold,lnoise,radiuscutL,radiuscutH,IcutL,IcutH,ecut,interactive,size,moviedt,ptime)
 % Same with the Ftrack code, except flip image at beginning
 % 3dig mean 3 digits, frame number < 1000
 %   give sigma a value to use Gaussian filter to smooth image.
@@ -6,7 +6,8 @@ function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,sigma,threshold,ln
 %   interactive=0 to disable movie mode. Otherwise do nothing.
 
 tic
-if nargin==13, interactive = 0; end
+if nargin==12, interactive = 0; end
+if nargin==15, interactive = 0.2; end
 
 if mod(feature,2) == 0
      warning('feature size must be an odd value');
@@ -25,13 +26,6 @@ for frame=first:last
     % read in file
     image = double(imread([filehead, num2str(frame,digit),'.tif']));
     image = flipud(image);
-    if sigma == 'disable'
-        % do nothing
-    else
-       image = imgaussfilt(image,sigma);
-    % Bandpass filter
-    end
-    
     imagebp = bpass(image,lnoise,feature);
     
     
@@ -63,10 +57,10 @@ for frame=first:last
             set(gca,'YDir','normal');
             axis equal;
             hold on;
-            plot(cnt(:,1),cnt(:,2),'ro','MarkerSize',9,'LineWidth',0.5);
+            plot(cnt(:,1),cnt(:,2),'ro','MarkerSize',size,'LineWidth',0.5);
             hold off;
             title(['Frame number: ' num2str(frame)],'fontweight','bold','Fontsize',18,'color','b');
-            pause(0.1)
+            pause(ptime)
         end
     end    
 end
@@ -76,7 +70,7 @@ toc
 
 % Format the position list so that we have four columns: x, y, m_0, m_2, frame
 
-% It’s better to separate the particle tracking from the trajectory
+% Itâ€™s better to separate the particle tracking from the trajectory
 % analysis. Once the particles are located in each frame, we can re-run the
 %trajectory anslysis using different parameters.
 %
