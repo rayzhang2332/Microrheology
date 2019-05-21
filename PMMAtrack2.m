@@ -1,4 +1,4 @@
-function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,threshold,lnoise,radiuscutL,radiuscutH,IcutL,IcutH,ecut,interactive,size,moviedt,ptime)
+function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,sigma,threshold,lnoise,radiuscutL,radiuscutH,IcutL,IcutH,ecut,interactive,size,moviedt,ptime)
 % Same with the Ftrack code, except flip image at beginning
 % 3dig mean 3 digits, frame number < 1000
 %   give sigma a value to use Gaussian filter to smooth image.
@@ -7,7 +7,7 @@ function pos_lst=PMMAtrack2(filehead,digit,first,last,feature,threshold,lnoise,r
 
 tic
 if nargin==12, interactive = 0; end
-if nargin==15, interactive = 0.2; end
+if nargin==15, ptime = 0.1; end
 
 if mod(feature,2) == 0
      warning('feature size must be an odd value');
@@ -26,6 +26,9 @@ for frame=first:last
     % read in file
     image = double(imread([filehead, num2str(frame,digit),'.tif']));
     image = flipud(image);
+    %%%%%%%%%%%%%%%%% If you dont want use gauss filter, or you don't have image process package, use fun PMMAtrack2b
+    image = imgaussfilt(image,sigma);
+   
     imagebp = bpass(image,lnoise,feature);
     
     
